@@ -16,3 +16,16 @@ df = df.with_row_index()
 ldf = ldf.filter(
               pl.col("dtg") > pl.lit(datetime.datetime.now()).cast(pl.Datetime("us", "UTC"))
 )
+
+# Remove all whitespace from all columns
+df.select(pl.col(pl.Utf8).str.strip_chars())
+
+# DataFrame containing only the rows where at least one column is null.
+df_missing = (
+    df
+    .filter(
+        pl.any_horizontal(pl.all().is_null())
+    )
+)
+
+# pl.all() is just syntactic sugar for pl.col("*").
