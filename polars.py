@@ -29,3 +29,7 @@ df_missing = (
 )
 
 # pl.all() is just syntactic sugar for pl.col("*").
+
+# Change number of rows printed
+with pl.Config(tbl_rows=2):
+    print(df)
